@@ -1,0 +1,16 @@
+-- run redis
+
+docker run -p 6379:6379 --name redis-feature-toggle -d redis
+
+-- connect to redis
+
+docker run -it --link redis-feature-toggle:redis --rm redis redis-cli -h redis -p 6379
+
+
+-- create feature disabled --
+
+set FF4J_FEATURE_yandex "{\"uid\":\"yandex\",\"enable\":false,\"description\":null,\"group\":null,\"permissions\":[],\"flippingStrategy\":null,\"customProperties\":{}}"
+
+-- create feature enabled --
+
+set FF4J_FEATURE_yandex "{\"uid\":\"yandex\",\"enable\":true,\"description\":null,\"group\":null,\"permissions\":[],\"flippingStrategy\":null,\"customProperties\":{}}"
